@@ -45,10 +45,20 @@ def text_analyzer(file_data, mode):
             while True:
                 tail_word = random.choices(list(markov_chain_dict.get(head_word).keys()),
                                            list(markov_chain_dict.get(head_word).values()), k=1)[0]
-                sentence.append(tail_word)
-                if len(sentence) > 4 and (sentence[-1][-1] in [".", "!", "?"]):
-                    break
-                head_word = tail_word
+
+                if (tail_word[-1] not in [".", "!", "?"]) and len(sentence) < 5:
+
+                    sentence.append(tail_word)
+                    head_word = tail_word
+
+                elif len(sentence) > 4:
+
+                    sentence.append(tail_word)
+
+                    if sentence[-1][-1] in [".", "!", "?"]:
+                        break
+
+                    head_word = tail_word
 
             print(*sentence)
         quit()
